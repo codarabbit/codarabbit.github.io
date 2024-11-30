@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Research Paper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000;
+            color: #fff;
+        }
+        .widget-container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .paper-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .paper-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #0073e6;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .paper-link:hover {
+            background-color: #005bb5;
+        }
+        .refresh-btn {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #333;
+            color: #0073e6;
+            border: 2px solid #0073e6;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .refresh-btn:hover {
+            background-color: #0073e6;
+            color: white;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="widget-container">
+        <div class="paper-title" id="paper-title">
+            Loading a random research paper...
+        </div>
+        <a id="paper-link" class="paper-link" href="#" target="_blank" style="display: none;">
+            Read Paper (PDF)
+        </a>
+        <button class="refresh-btn" onclick="fetchRandomPaper()">Fetch Another Paper</button>
+        <div id="error-message" class="error-message" style="display: none;"></div>
+    </div>
+
+    <script>
+        // Function to fetch a random research paper with a direct PDF link
+        async function fetchRandomPaper() {
+            const apiUrl = "https://export.arxiv.org/api/query?search_query=all:AI&start=0&max_results=10";
+            const errorMessage = document.getElementById("error-message");
+            const titleElement = document.getElementById("paper-title");
+            const linkElement = document.getElementById("paper-link");
+
+            // Clear previous error messages
+            errorMessage.style.display = "none";
+
+            try {
+                // Fetch data from the arXiv API
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error("Failed to fetch research papers.");
+
+                const text = await response.text();
+
+                // Parse XML response
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+
+                const entries = xmlDoc.getElementsByTagName("entry");
+                if (entries.length === 0) {
+                    throw new Error("No research papers found.");
+                }
+
+                // Pick a random paper
+                const randomIndex = Math.floor(Math.random() * entries.length);
+                const selectedEntry = entries[randomIndex];
+                const title = selectedEntry.getElementsByTagName("title")[0].textContent.trim();
+                const pdfLink = selectedEntry.getElementsByTagName("id")[0].textContent.replace("abs", "pdf");
+
+                // Update the widget with the paper's title and PDF link
+                titleElement.innerText = title || "Untitled Paper";
+                linkElement.href = pdfLink || "#";
+                linkElement.style.display = "inline-block";
+            } catch (error) {
+                // Display error messages
+                errorMessage.innerText = error.message;
+                errorMessage.style.display = "block";
+                linkElement.style.display = "none";
+                titleElement.innerText = "Unable to fetch a research paper.";
+            }
+        }
+
+        // Fetch a random paper when the page loads
+        window.onload = fetchRandomPaper;
+    </script>
+</body>
+</html>
