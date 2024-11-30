@@ -13,16 +13,17 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #1e1e1e; /* Gray background for the entire page */
+            background-color: #1e1e1e;
             color: #fff;
         }
         .widget-container {
             text-align: center;
             max-width: 600px;
             padding: 20px;
-            background: #2a2a2a; /* Slightly darker gray for the widget box */
+            background: #1e1e1e;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 100%;
         }
         .paper-title {
             font-size: 20px;
@@ -42,19 +43,42 @@
             background-color: #005bb5;
         }
         .refresh-btn {
-            display: block;
+            display: inline-block;
             margin-top: 20px;
-            padding: 10px 15px;
-            background-color: #333;
+            padding: 8px 12px;
+            background-color: #444;
             color: #0073e6;
             border: 2px solid #0073e6;
             border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .refresh-btn:hover {
             background-color: #0073e6;
             color: white;
+        }
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        .dropdown-container {
+            display: inline-block;
+        }
+        .dropdown {
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 2px solid #0073e6;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+        }
+        .dropdown:hover {
+            background-color: #0073e6;
+            color: #fff;
         }
         .error-message {
             color: red;
@@ -70,14 +94,102 @@
         <a id="paper-link" class="paper-link" href="#" target="_blank" style="display: none;">
             Read Paper (PDF)
         </a>
-        <button class="refresh-btn" onclick="fetchRandomPaper()">Fetch Another Paper</button>
+        
+        <div class="controls">
+            <!-- Difficulty Dropdown -->
+            <div class="dropdown-container">
+                <label for="difficulty">Select Difficulty:</label>
+                <select id="difficulty" class="dropdown">
+                    <option value="all">All</option>
+                    <option value="introductory">Easy</option>
+                    <option value="intermediate">Medium</option>
+                    <option value="advanced">Hard</option>
+                </select>
+            </div>
+
+            <!-- Topic Dropdown -->
+            <div class="dropdown-container">
+                <label for="topic">Select Topic:</label>
+                <select id="topic" class="dropdown">
+                    <option value="all">All Topics</option>
+                    <option value="Artificial Intelligence">Artificial Intelligence</option>
+                    <option value="Machine Learning">Machine Learning</option>
+                    <option value="Data Science">Data Science</option>
+                    <option value="Physics">Physics</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Biology">Biology</option>
+                    <option value="Chemistry">Chemistry</option>
+                    <option value="Social Sciences">Social Sciences</option>
+                    <option value="Economics">Economics</option>
+                    <option value="Psychology">Psychology</option>
+                    <option value="Medicine">Medicine</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Astronomy">Astronomy</option>
+                    <option value="Linguistics">Linguistics</option>
+                    <option value="Philosophy">Philosophy</option>
+                    <option value="Neuroscience">Neuroscience</option>
+                    <option value="Environmental Science">Environmental Science</option>
+                    <option value="Political Science">Political Science</option>
+                    <option value="Law">Law</option>
+                    <option value="Business">Business</option>
+                    <option value="History">History</option>
+                    <option value="Education">Education</option>
+                </select>
+            </div>
+
+            <!-- Fetch Another Paper Button -->
+            <button class="refresh-btn" onclick="fetchRandomPaper()">Fetch Another Paper</button>
+        </div>
+
         <div id="error-message" class="error-message" style="display: none;"></div>
     </div>
 
     <script>
-        // Function to fetch a random research paper with a direct PDF link
         async function fetchRandomPaper() {
-            const apiUrl = "https://export.arxiv.org/api/query?search_query=all&start=0&max_results=10"; 
+            const difficulty = document.getElementById("difficulty").value;
+            const topic = document.getElementById("topic").value;
+            let query = "all";
+
+            // Difficulty mappings
+            if (difficulty === "introductory") {
+                query = "overview OR introduction OR beginner OR basic OR fundamental OR primer OR guide OR simple";
+            } else if (difficulty === "intermediate") {
+                query = "case study OR analysis OR moderate OR experimental OR practical OR methodology OR evaluation OR study OR discussion";
+            } else if (difficulty === "advanced") {
+                query = "mathematical OR theoretical OR model OR complex OR advanced OR proof OR algorithm OR statistical OR optimization OR quantitative OR research OR deep learning OR neural networks";
+            }
+
+            // Topic mappings with 50+ keywords each
+            if (topic !== "all") {
+                const topicKeywords = {
+    "Artificial Intelligence": "AI OR machine learning OR deep learning OR neural networks OR natural language processing OR computer vision OR reinforcement learning OR artificial intelligence OR automation OR robotics OR expert systems OR speech recognition OR cognitive computing OR computer vision OR pattern recognition OR intelligent agents OR multi-agent systems OR decision support systems OR machine reasoning OR AI ethics OR supervised learning OR unsupervised learning OR genetic algorithms OR fuzzy systems OR data mining OR predictive analytics OR artificial neural networks OR machine perception OR knowledge representation OR swarm intelligence OR computational intelligence OR reasoning systems OR AI applications OR image processing OR AI algorithms OR big data OR cloud computing OR AI models OR computer vision OR AI theory OR human-computer interaction OR voice recognition OR artificial intelligence research OR deep reinforcement learning OR AI systems OR neural architecture OR model optimization OR autonomous systems OR AI programming OR data science OR sentiment analysis OR AI development OR knowledge discovery OR expert systems OR machine intelligence OR machine translation OR AI technologies",
+    "Machine Learning": "supervised learning OR unsupervised learning OR reinforcement learning OR regression OR classification OR support vector machines OR decision trees OR neural networks OR random forests OR gradient boosting OR clustering OR k-nearest neighbors OR deep learning OR convolutional neural networks OR recurrent neural networks OR machine learning algorithms OR ensemble methods OR pattern recognition OR feature selection OR time series forecasting OR feature engineering OR support vector machines OR data mining OR model evaluation OR cross-validation OR overfitting OR underfitting OR model accuracy OR supervised models OR unsupervised methods OR predictive analytics OR model deployment OR artificial neural networks OR generative adversarial networks OR optimization OR classification algorithms OR data pre-processing OR exploratory data analysis OR machine learning theory OR decision boundaries OR learning rate OR hyperparameters OR model tuning OR model selection OR training data OR validation data OR outliers OR anomaly detection OR natural language processing OR deep reinforcement learning OR bias-variance tradeoff OR machine learning research OR adversarial training OR machine perception OR AI integration",
+    "Data Science": "data analysis OR big data OR data mining OR data visualization OR data modeling OR predictive analytics OR statistical learning OR machine learning OR data engineering OR data science algorithms OR data wrangling OR data preprocessing OR model building OR data exploration OR feature engineering OR clustering OR regression analysis OR exploratory data analysis OR data transformation OR data pipelines OR statistical analysis OR hypothesis testing OR outlier detection OR decision trees OR neural networks OR random forests OR deep learning OR artificial intelligence OR time series analysis OR business analytics OR data architectures OR cloud computing OR big data analytics OR predictive modeling OR supervised learning OR unsupervised learning OR feature selection OR classification algorithms OR decision support systems OR machine perception OR data integration OR data cleansing OR model validation OR data mining algorithms OR predictive modeling OR natural language processing OR classification problems OR clustering algorithms OR model performance OR hypothesis testing OR business intelligence OR supervised data OR unsupervised data OR Python OR R programming OR database management OR data privacy OR data ethics OR machine perception",
+    "Physics": "quantum mechanics OR classical mechanics OR electromagnetism OR relativity OR nuclear physics OR particle physics OR astrophysics OR optics OR condensed matter physics OR thermodynamics OR statistical mechanics OR quantum field theory OR mathematical physics OR cosmology OR general relativity OR quantum entanglement OR black holes OR string theory OR gravitational waves OR quantum computing OR dark matter OR nuclear fusion OR plasma physics OR quantum tunneling OR high-energy physics OR chaos theory OR supersymmetry OR dark energy OR space-time OR elementary particles OR atomic physics OR high-energy collisions OR neutrinos OR Feynman diagrams OR string theory OR quantum electrodynamics OR quantum chromodynamics OR quantum field theory OR quantum theory OR thermodynamic systems OR photonics OR nuclear reactions OR relativity theory OR computational physics OR spintronics OR condensed matter theory OR geophysics OR particle accelerators OR quantum optics OR astrophysical phenomena",
+    "Mathematics": "algebra OR calculus OR geometry OR probability OR statistics OR discrete mathematics OR differential equations OR number theory OR mathematical modeling OR combinatorics OR real analysis OR complex analysis OR topology OR linear algebra OR abstract algebra OR functional analysis OR optimization OR mathematical logic OR cryptography OR graph theory OR applied mathematics OR pure mathematics OR mathematical proofs OR group theory OR set theory OR probability theory OR numerical methods OR mathematical structures OR differential geometry OR chaos theory OR mathematical physics OR coding theory OR linear programming OR Euclidean geometry OR measure theory OR mathematical statistics OR numerical analysis OR approximation theory OR algebraic geometry OR operations research OR matrix theory OR number theory OR scientific computing OR geometric analysis OR fractal geometry OR computational mathematics OR theoretical mathematics OR optimization theory OR Fourier analysis OR Boolean algebra OR partial differential equations",
+    "Engineering": "mechanical engineering OR electrical engineering OR civil engineering OR chemical engineering OR aerospace engineering OR biomedical engineering OR environmental engineering OR systems engineering OR electrical circuits OR materials science OR fluid mechanics OR thermodynamics OR control systems OR automation OR robotics OR nanotechnology OR structural engineering OR vibration analysis OR civil infrastructure OR thermodynamics OR heat transfer OR civil construction OR mechanical design OR sustainable engineering OR electronics OR chemical process engineering OR process control OR mechatronics OR fluid dynamics OR thermodynamics OR transportation engineering OR manufacturing OR industrial engineering OR computational engineering OR network engineering OR environmental design OR mechanical systems OR electrical systems OR design engineering OR communication systems OR power systems OR engineering mechanics OR acoustics OR engineering management OR hydraulics OR construction materials OR electrical engineering research OR mechanical properties OR fluid systems OR system dynamics",
+    "Biology": "cell biology OR genetics OR ecology OR evolution OR molecular biology OR neurobiology OR biotechnology OR bioinformatics OR biochemistry OR microbiology OR physiology OR developmental biology OR plant biology OR genetics engineering OR genomics OR bioengineering OR ecological systems OR marine biology OR behavioral biology OR biophysics OR structural biology OR evolution theory OR biotechnology OR bioinformatics OR bioengineering OR neuroscience OR neurogenetics OR microbiome OR DNA sequencing OR animal behavior OR cellular processes OR plant genetics OR cell signaling OR biotechnology applications OR neuroscience research OR evolutionary biology OR molecular genetics OR bioinformatics analysis OR stem cells OR genomics OR microbiology research OR environmental biology OR population ecology OR biosystems OR reproductive biology OR molecular medicine OR biomolecular engineering OR biological diversity OR computational biology OR human genetics OR biostatistics OR scientific biology OR laboratory techniques OR biomolecular research OR gene therapy",
+    "Chemistry": "organic chemistry OR inorganic chemistry OR physical chemistry OR analytical chemistry OR biochemistry OR chemical engineering OR environmental chemistry OR materials science OR chemical reactions OR chemical synthesis OR catalysis OR polymer chemistry OR solid-state chemistry OR chemical kinetics OR thermochemistry OR spectroscopy OR chemical bonding OR coordination chemistry OR surface chemistry OR organometallic chemistry OR quantum chemistry OR computational chemistry OR physical chemistry theory OR biocatalysis OR nanomaterials OR chemical equilibrium OR redox reactions OR industrial chemistry OR chemical thermodynamics OR medicinal chemistry OR chemical process engineering OR green chemistry OR chemical safety OR drug design OR chemical engineering principles OR molecular chemistry OR chemical structures OR organic synthesis OR chemical analysis OR chemical reactions research OR industrial applications OR chemical engineering design OR environmental chemistry research OR industrial processes OR molecular dynamics OR synthesis methods OR chemical systems",
+    "Social Sciences": "psychology OR sociology OR anthropology OR economics OR political science OR human geography OR history OR education OR gender studies OR social policy OR criminology OR social theory OR cultural studies OR social work OR social inequality OR social movements OR political economy OR global studies OR social networks OR poverty studies OR globalization OR social justice OR media studies OR urban sociology OR organizational behavior OR development studies OR social behavior OR social cognition OR public policy OR human rights OR social development OR qualitative research OR ethnography OR economic sociology OR social issues OR human development OR labor studies OR multiculturalism OR environmental sociology OR sociology of education OR political sociology OR social change OR social stratification OR social systems OR historical sociology OR race relations OR sociological research OR social institutions",
+    "Economics": "macroeconomics OR microeconomics OR economic theory OR labor economics OR international economics OR development economics OR industrial organization OR public economics OR environmental economics OR monetary policy OR fiscal policy OR behavioral economics OR game theory OR econometrics OR economic modeling OR economic policy OR financial markets OR econometric analysis OR supply and demand OR trade theory OR economic growth OR investment theory OR economic development OR business economics OR corporate finance OR international trade OR global markets OR business cycle OR economic inequality OR financial analysis OR market structure OR financial institutions OR development policy OR health economics OR economic forecasting OR agricultural economics OR public finance OR economics research OR welfare economics OR social economics OR economic history OR economics of innovation OR financial systems OR competition theory OR consumer behavior OR economic forecasting OR empirical economics OR economic studies OR regional economics",
+    "Psychology": "cognitive psychology OR behavioral psychology OR clinical psychology OR social psychology OR neuroscience OR mental health OR developmental psychology OR personality psychology OR clinical therapy OR cognitive therapy OR psychological testing OR motivation OR neuropsychology OR psychological disorders OR psychological research OR emotional intelligence OR memory OR learning OR perception OR social cognition OR neuroimaging OR brain function OR depression OR anxiety OR clinical interventions OR mental illness OR mental health disorders OR psychotherapy OR therapeutic techniques OR psychological therapy OR stress management OR behavioral analysis OR psychoanalysis OR addiction psychology OR neurobiology OR psychiatry OR psychological assessment OR child psychology OR adult psychology OR psychotherapy techniques OR trauma studies OR emotional disorders OR positive psychology OR psychological counseling OR cognitive science OR research psychology OR adolescent psychology OR psychological disorders OR behavioral therapy OR therapy models OR social behavior",
+    "Medicine": "clinical medicine OR genetics OR neuroscience OR pharmacology OR epidemiology OR public health OR surgery OR cardiology OR pediatrics OR oncology OR internal medicine OR obstetrics OR gynecology OR medical research OR pharmacogenomics OR medical ethics OR neurology OR pathology OR mental health OR clinical trials OR treatment protocols OR medical education OR health systems OR diagnostic methods OR patient care OR clinical interventions OR health policy OR molecular biology OR health care systems OR bioinformatics OR immunology OR clinical practice OR telemedicine OR clinical trials OR medical imaging OR health technology OR medical pharmacology OR hospital management OR molecular genetics OR pharmacology research OR personalized medicine OR biomedicine OR clinical studies OR therapeutic treatments OR diagnostic tools OR healthcare innovation OR infectious diseases OR emergency medicine OR primary care OR clinical investigations OR drug discovery OR medical diagnostics OR healthcare services OR medical procedures OR hospital care OR clinical guidelines",
+    "Computer Science": "programming OR algorithms OR data structures OR software engineering OR computer architecture OR database systems OR artificial intelligence OR computer networks OR cybersecurity OR machine learning OR human-computer interaction OR computer graphics OR theoretical computer science OR distributed systems OR cloud computing OR operating systems OR web development OR mobile applications OR compilers OR data mining OR internet of things OR computer vision OR big data OR blockchain OR quantum computing OR computational theory OR software development OR coding OR data science OR cryptography OR algorithm design OR parallel computing OR virtualization OR networking OR database management OR programming languages OR computer hardware OR internet security OR embedded systems OR software testing OR software design OR automation OR game development OR computer simulation OR computer modeling",
+    "Astronomy": "stars OR galaxies OR black holes OR space exploration OR cosmology OR celestial bodies OR nebulae OR telescopes OR planetary science OR space-time OR relativity OR dark matter OR dark energy OR astronomical observations OR space missions OR planetary systems OR astrophysics OR gravitational waves OR interstellar travel OR astronomy research OR astrobiology OR exoplanets OR cosmic microwave background OR planetary geology OR space telescopes OR space exploration technologies OR astronomical imaging OR moon OR solar system OR astrophysical phenomena OR light-year OR cosmological models OR universe theory OR space science OR astronomy theory OR space debris OR Hubble Space Telescope OR James Webb Space Telescope OR asteroid OR meteoroid OR space-time continuum OR radio astronomy OR infrared astronomy OR ultraviolet astronomy OR gamma-ray astronomy",
+    "Linguistics": "phonetics OR syntax OR semantics OR morphology OR sociolinguistics OR psycholinguistics OR applied linguistics OR language acquisition OR bilingualism OR phonology OR linguistics theory OR language processing OR dialects OR sociocultural linguistics OR linguistics research OR second language learning OR linguistics methodology OR linguistics applications OR computational linguistics OR corpus linguistics OR semantics theory OR pragmatics OR language universals OR multilingualism OR historical linguistics OR language change OR corpus analysis OR language variation OR psycholinguistic experiments OR second-language acquisition OR linguistics education OR language policy OR linguistic anthropology OR linguistic typology OR forensic linguistics OR language and cognition OR language documentation",
+    "Philosophy": "ethics OR metaphysics OR epistemology OR logic OR political philosophy OR philosophy of mind OR philosophy of science OR philosophy of language OR moral philosophy OR existentialism OR phenomenology OR analytical philosophy OR continental philosophy OR aesthetics OR epistemological theories OR philosophy of religion OR rationalism OR empiricism OR utilitarianism OR deontology OR virtue ethics OR philosophical methodology OR philosophical logic OR Plato OR Aristotle OR Immanuel Kant OR philosophy of education OR philosophy of history OR social philosophy OR philosophy of law OR feminism OR political theory OR dialectics OR political philosophy OR Stoicism OR moral dilemmas OR theory of knowledge OR personal identity OR ethics of AI OR critical theory OR philosophy of society OR existential ethics OR virtue theory",
+    "Neuroscience": "neurobiology OR brain science OR neural networks OR neuroscience research OR cognitive neuroscience OR brain imaging OR neurodegenerative diseases OR neurogenesis OR neuroplasticity OR neurotransmitters OR synaptic plasticity OR behavioral neuroscience OR neural circuits OR memory OR learning OR neuropsychology OR neuroimaging OR brain function OR psychological disorders OR neurochemistry OR neurobiology research OR neurodevelopment OR neurology OR neuroinformatics OR central nervous system OR peripheral nervous system OR glial cells OR dendrites OR axons OR neurons OR cognitive function OR brain mapping OR brain disorders OR neural mechanisms OR brain diseases OR neural networks OR neuroscience education OR nervous system OR neurophysiology OR neurological conditions OR brain injury OR stroke OR Parkinson’s disease OR Alzheimer’s disease OR schizophrenia OR autism",
+    "Environmental Science": "ecosystems OR environmental sustainability OR climate change OR biodiversity OR conservation OR renewable energy OR pollution OR natural resources OR ecological science OR environmental chemistry OR environmental impact OR global warming OR environmental ethics OR resource management OR climate science OR environmental policy OR environmental protection OR environmental studies OR sustainability OR green technology OR environmental health OR ecosystem services OR pollution control OR waste management OR environmental conservation OR environmental justice OR environmental education OR conservation biology OR carbon footprint OR climate policy OR natural disaster management OR environmental regulations OR climate adaptation OR environmental monitoring OR ecology OR environmental planning OR conservation science OR environmental risk assessment OR marine biology OR global warming solutions OR deforestation OR habitat restoration OR air quality OR water quality OR environmental protection strategies",
+    "Political Science": "politics OR political theory OR political behavior OR international relations OR political economy OR governance OR political philosophy OR elections OR political parties OR political systems OR policy analysis OR public administration OR comparative politics OR political institutions OR global politics OR political history OR democratic theory OR authoritarianism OR international law OR political ideologies OR political movements OR civil rights OR political activism OR public policy OR human rights OR democracy OR electoral systems OR political science theory OR lobbying OR statecraft OR political discourse OR policy-making OR international diplomacy OR foreign policy OR social movements OR peace studies OR political representation OR political research OR global governance OR human rights policy OR constitutional law OR politics of inequality",
+    "Law": "constitutional law OR criminal law OR civil law OR human rights law OR family law OR international law OR environmental law OR corporate law OR intellectual property law OR legal theory OR legal research OR law enforcement OR legal practice OR contract law OR tort law OR legal ethics OR legal systems OR law courts OR judicial review OR legislation OR criminal justice OR law policy OR international human rights OR legal studies OR law enforcement agencies OR administrative law OR dispute resolution OR legal procedures OR legal reforms OR criminal defense OR legal counseling OR legal advising OR public law OR common law OR civil liberties OR constitutional rights OR family law matters OR litigation OR arbitration OR legal documentation OR legal practice OR legal compliance OR corporate governance OR legal interpretation",
+    "Business": "entrepreneurship OR marketing OR finance OR accounting OR business management OR business strategy OR economics OR business operations OR business administration OR management theories OR leadership OR supply chain management OR project management OR business ethics OR organizational behavior OR corporate governance OR business law OR human resources OR business development OR international business OR corporate finance OR market research OR branding OR business communications OR retail management OR strategic planning OR negotiations OR finance management OR business analysis OR consumer behavior OR business operations OR corporate marketing OR mergers and acquisitions OR business startups OR business models OR innovation OR business performance OR business growth OR competitive advantage OR business process improvement OR corporate sustainability OR business analytics OR organizational development OR business risk management OR financial forecasting OR digital marketing OR customer relationship management",
+};
+
+                query += ` AND (${topicKeywords[topic]})`;
+            }
+
+            const apiUrl = `https://export.arxiv.org/api/query?search_query=${query}&start=0&max_results=10`; 
             const errorMessage = document.getElementById("error-message");
             const titleElement = document.getElementById("paper-title");
             const linkElement = document.getElementById("paper-link");
@@ -107,21 +219,19 @@
                 const title = selectedEntry.getElementsByTagName("title")[0].textContent.trim();
                 const pdfLink = selectedEntry.getElementsByTagName("id")[0].textContent.replace("abs", "pdf");
 
-                // Update the widget with the paper's title and PDF link
-                titleElement.innerText = title || "Untitled Paper";
-                linkElement.href = pdfLink || "#";
+                // Update the widget with the paper's title and link
+                titleElement.textContent = title;
+                linkElement.href = pdfLink;
                 linkElement.style.display = "inline-block";
             } catch (error) {
-                // Display error messages
-                errorMessage.innerText = error.message;
                 errorMessage.style.display = "block";
+                errorMessage.textContent = error.message;
                 linkElement.style.display = "none";
-                titleElement.innerText = "Unable to fetch a research paper.";
             }
         }
 
-        // Fetch a random paper when the page loads
-        window.onload = fetchRandomPaper;
+        // Initialize by loading a random paper
+        fetchRandomPaper();
     </script>
 </body>
 </html>
