@@ -1,132 +1,59 @@
-==================================================================================================
+MATRIX-Cyforce
+Welcome to MATRIX-Cyforce, a modern cybersecurity and digital forensics website designed to showcase expert services, insights, and solutions to protect your digital assets. This site is built with a sleek, responsive design and interactive features to engage visitors and highlight cybersecurity expertise.
 
-DESCRIPTION:
+About
+MATRIX-Cyforce is dedicated to providing security that never sleeps and forensics that never fails. Our website highlights services including vulnerability assessments, incident response, digital forensics, and security consulting. We aim to educate and empower users with knowledge about cyber threats and protection techniques.
 
-FLARE is a free landing page and website template designed for digital agency or startup. With 
-this template, you can now easily create a website that would make a strong and lasting impression. 
-Its trendy, modern, and sophisticated style will surely help your site to stand out visually and 
-grab the attention of those potential clients.
+Features
+Responsive and modern user interface
 
-==================================================================================================
+Interactive hero section with particle effects for a tech-savvy look
 
+Sections for About, Services, Portfolio (Works), and Contact
 
-LICENSE:
+Integrated social media icons
 
-This free resource is provided by styleshout.com and is free to use in 
-both personal and commercial projects.
+Video integration for engaging content presentation
 
+Smooth scrolling navigation
 
-Rights:
--------
+Technologies Used
+HTML5, CSS3, and JavaScript
 
-You are permitted to use this free resource in any number of personal and commercial projects for 
-yourself or a client. You may modify the resource according to your requirements and include them 
-in your projects under the following condition - you MUST give appropriate credit, provide an 
-attribution link to styleshout.com.
+Particles.js for animated background effects
 
+FontAwesome for icons
 
-Prohibitions:
--------------
+Responsive layout design with CSS Flexbox/Grid
 
-You are not permitted to resell or redistribute(even for free) the resource "as is" without 
-prior consent. If you would like to republish or promote this resource on your site, please 
-link back to the appropriate resource page on styleshout.com where users can find the download 
-and not directly to the download zip file.
+Vimeo for video embedding
 
+Installation / Deployment
+This site is static and can be easily hosted on platforms like GitHub Pages, Netlify, or any static site hosting service.
 
-Attribution: 
-------------
+To deploy on GitHub Pages:
 
-You must include a credit link to our website(https://www.styleshout.com) somewhere on your site. 
-We prefer the footer credit that comes with the template but you are still free to move it 
-somewhere else.
+Clone the repository
 
+Commit and push your changes to the main branch
 
+Go to the repository settings on GitHub
 
-If you have any questions about the License, feel free to contact us.
+Enable GitHub Pages under the “Pages” section
 
+Choose the branch (main) and root folder as the source
 
------------------------------------------------------------------------------------------------------
+Your site will be published at https://<your-username>.github.io/<repository-name>/
 
+Usage
+Use this repository as a portfolio or template to showcase cybersecurity projects, services, or educational content. Modify the content, styles, and media files to fit your branding and offerings.
 
-REMOVING THE ATTRIBUTION LINK:
+Contribution
+Contributions are welcome! Feel free to fork this repo and create pull requests for improvements, bug fixes, or feature additions.
 
-We understand that there are situations where you want to use our templates without 
-the crediting obligation. If that's your case, you can always send us a 
-credit removal fee of 10 USD through Paypal. This will allow you to use a single 
-template attribution/credit link free on ONE DOMAIN name.
+License
+This project is open source and available under the MIT License.
 
-You can send your payments through Paypal to this address: ealigam@gmail.com or
-visit our attribution removal page: https://www.styleshout.com/attribution-free/ 
-and click the pay button on the page.
-
-If possible, kindly send us the site's url where the template is being used. 
-Also, keep your Paypal receipt as proof of payment and your good to go.
-
-
------------------------------------------------------------------------------------------------------- 
-
-
-SUPPORT:
-    
-Since FLARE is distributed for free, support is not offered. FLARE is coded according 
-to current web standards and we did our best to make the template easy to use and modify.
-If you have minimum web development experience, you can easily modify the template. 
-However, If you're still new to HTML and CSS, I suggest that you visit the 
-following tutorials:
-
- - https://marksheet.io/
- - http://learn.shayhowe.com/html-css/
-
-These will teach you the essentials of HTML and CSS. In addition, if you want to include
-jQuery in your skill-set, you can also check out these tutorials: 
-
- - https://code.tutsplus.com/courses/30-days-to-learn-jquery
- - https://code.tutsplus.com/courses/introduction-to-jquery
-
-
------------------------------------------------------------------------------------------------------- 
-
-
-GET THE LATEST VERSION:
-
-We update our templates on a regular basis so to make sure that you have the latest version, 
-always download the template files directly on our website(https://www.styleshout.com/)
-
-
-
--------------------------------------------------------------------------------------------------------
-
-
-SOURCES AND CREDITS:
-
-I've used the following resources as listed.
-
-Fonts:
- - Nunito Sans Font (https://fonts.google.com/specimen/Nunito+Sans)
- - Montserrat Font (https://fonts.google.com/specimen/Montserrat)
-
-Icons:
- - Iconmonstr (https://iconmonstr.com/)
- - Font Awesome (https://fontawesome.com/)
- - Simple Icons (https://simpleicons.org/)
- - Creative Process Vector Icons (https://pixelbuddha.net/freebie/creative-process-vector-icons)
-
-Stock Photos and Graphics:
- - Unsplash.com (https://unsplash.com/)
- 
-Javascript Files:
- - JQuery (http://jquery.com/)
- - Modernizr (http://modernizr.com/)
- - PhotoSwipe (https://photoswipe.com/)
- - Slick slider (http://kenwheeler.github.io/slick/)
- - Animate On Scroll (https://michalsnik.github.io/aos/)
- - Code Prettify (https://github.com/google/code-prettify)
- - Lity (https://sorgalla.com/lity/)
-
--------------------------------------------------------------------------------------------------------
-
-
-Thanks for downloading from Styleshout :)
-
-
+Contact
+For inquiries or support, contact:
+Email: matrixcyforce@outlook.com
