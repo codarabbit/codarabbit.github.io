@@ -5002,7 +5002,7 @@ html.no-csstransitions .s-hero__content {
 
 #team {
     padding: var(--vspace-4) 0;
-    background-color: var(--color-bg);
+    background-color: var(--color-bg, #14171B); /* fallback to black */
     color: var(--color-text-dark);
 }
 
